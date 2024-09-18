@@ -275,6 +275,8 @@ class ChewieController extends ChangeNotifier {
     this.fullScreenByDefault = false,
     this.cupertinoProgressColors,
     this.materialProgressColors,
+    this.materialSeekButtonFadeDuration = const Duration(milliseconds: 300),
+    this.materialSeekButtonSize = 26,
     this.placeholder,
     this.overlay,
     this.showControlsOnInitialize = true,
@@ -289,6 +291,7 @@ class ChewieController extends ChangeNotifier {
     this.subtitleBuilder,
     this.customControls,
     this.errorBuilder,
+    this.bufferingBuilder,
     this.allowedScreenSleep = true,
     this.isLive = false,
     this.allowFullScreen = true,
@@ -323,6 +326,8 @@ class ChewieController extends ChangeNotifier {
     bool? fullScreenByDefault,
     ChewieProgressColors? cupertinoProgressColors,
     ChewieProgressColors? materialProgressColors,
+    Duration? materialSeekButtonFadeDuration,
+    double? materialSeekButtonSize,
     Widget? placeholder,
     Widget? overlay,
     bool? showControlsOnInitialize,
@@ -336,6 +341,7 @@ class ChewieController extends ChangeNotifier {
     Subtitles? subtitle,
     Widget Function(BuildContext, dynamic)? subtitleBuilder,
     Widget? customControls,
+    WidgetBuilder? bufferingBuilder,
     Widget Function(BuildContext, String)? errorBuilder,
     bool? allowedScreenSleep,
     bool? isLive,
@@ -373,6 +379,10 @@ class ChewieController extends ChangeNotifier {
           cupertinoProgressColors ?? this.cupertinoProgressColors,
       materialProgressColors:
           materialProgressColors ?? this.materialProgressColors,
+      materialSeekButtonFadeDuration:
+          materialSeekButtonFadeDuration ?? this.materialSeekButtonFadeDuration,
+      materialSeekButtonSize:
+          materialSeekButtonSize ?? this.materialSeekButtonSize,
       placeholder: placeholder ?? this.placeholder,
       overlay: overlay ?? this.overlay,
       showControlsOnInitialize:
@@ -385,6 +395,7 @@ class ChewieController extends ChangeNotifier {
       subtitleBuilder: subtitleBuilder ?? this.subtitleBuilder,
       customControls: customControls ?? this.customControls,
       errorBuilder: errorBuilder ?? this.errorBuilder,
+      bufferingBuilder: bufferingBuilder ?? this.bufferingBuilder,
       allowedScreenSleep: allowedScreenSleep ?? this.allowedScreenSleep,
       isLive: isLive ?? this.isLive,
       allowFullScreen: allowFullScreen ?? this.allowFullScreen,
@@ -485,6 +496,9 @@ class ChewieController extends ChangeNotifier {
   final Widget Function(BuildContext context, String errorMessage)?
       errorBuilder;
 
+  /// When the video is buffering, you can build a custom widget.
+  final WidgetBuilder? bufferingBuilder;
+
   /// The Aspect Ratio of the Video. Important to get the correct size of the
   /// video!
   ///
@@ -498,6 +512,12 @@ class ChewieController extends ChangeNotifier {
   /// The colors to use for the Material Progress Bar. By default, the Material
   /// player uses the colors from your Theme.
   final ChewieProgressColors? materialProgressColors;
+
+  // The duration of the fade animation for the seek button (Material Player only)
+  final Duration materialSeekButtonFadeDuration;
+
+  // The size of the seek button for the Material Player only
+  final double materialSeekButtonSize;
 
   /// The placeholder is displayed underneath the Video before it is initialized
   /// or played.

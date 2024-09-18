@@ -94,9 +94,10 @@ class _CupertinoControlsState extends State<CupertinoControls>
           child: Stack(
             children: [
               if (_displayBufferingIndicator)
-                const Center(
-                  child: CircularProgressIndicator(),
-                )
+                _chewieController?.bufferingBuilder?.call(context) ??
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    )
               else
                 _buildHitArea(),
               Column(
@@ -721,6 +722,7 @@ class _CupertinoControlsState extends State<CupertinoControls>
                   255,
                 ),
               ),
+          draggableProgressBar: chewieController.draggableProgressBar,
         ),
       ),
     );
